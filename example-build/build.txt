@@ -1,0 +1,8 @@
+
+scripts/main.js
+----------------
+scripts/libs/text.js
+scripts/libs/handlebars.js
+scripts/libs/hbars.js
+hbars!templates/message
+scripts/main.js

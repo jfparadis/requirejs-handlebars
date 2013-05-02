@@ -34,34 +34,27 @@
 define(['text', 'Handlebars'], function (text, Handlebars) {
     'use strict';
 
-    var sourceMap = {},
-        buildMap = {},
-        buildTemplateSource = "define('{pluginName}!{moduleName}', ['Handlebars'], function (Handlebars) { return Handlebars.compile('{content}'); });\n";
+    var buildMap = {},
+        buildTemplateSource = "define('{pluginName}!{moduleName}', ['Handlebars'], function (Handlebars) { return Handlebars.template({content}); });\n";
 
     return {
         version: '0.0.1',
 
         load: function (moduleName, parentRequire, onload, config) {
-            if (buildMap[moduleName]) {
-                onload(buildMap[moduleName]);
-
-            } else {
-                var ext = (config.hbars && config.hbars.extension) || '.html';
-                text.load(moduleName + ext, parentRequire, function (source) {
-                    if (config.isBuild) {
-                        sourceMap[moduleName] = source;
-                        onload();
-                    } else {
-                        buildMap[moduleName] = Handlebars.compile(source);
-                        onload(buildMap[moduleName]);
-                    }
-                }, config);
-            }
+            var ext = (config.hbars && config.hbars.extension) || '.html';
+            var compileOpts = (config.hbars && config.hbars.compileOptions) || {};
+            text.load(moduleName + ext, parentRequire, function (source) {
+                if (config.isBuild) {
+                    // we store the precompiled template so we can use the
+                    // handlebars.runtime after build
+                    buildMap[moduleName] = Handlebars.precompile(source, compileOpts);
+                }
+                onload( Handlebars.compile(source, compileOpts) );
+            }, config);
         },
 
         write: function (pluginName, moduleName, write, config) {
-            var source = sourceMap[moduleName],
-                content = source && text.jsEscape(source);
+            var content = buildMap[moduleName];
             if (content) {
                 write.asModule(pluginName + '!' + moduleName,
                     buildTemplateSource

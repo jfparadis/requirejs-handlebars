@@ -14,7 +14,7 @@ This is an AMD loader for [Handlebars semantic templates](http://handlebars.com)
 
 Notes:
 
-- The text library can be removed at build-time using ``r.js``.
+- The `text` and `hbar` plugins can be removed at build-time using ``r.js``. (with the `stubModules` setting)
 
 - The extension ``.html`` is assmumed, and this makes loading templates similar to loading JavaScript files with RequireJS (all extensions are assumned).
 
@@ -69,7 +69,8 @@ require.config({
   // some paths and shims
 
   hbars: {
-    extension: '.hbars' // default = '.html'
+    extension: '.hbs', // default = '.html'
+    compileOptions: {} // options object which is passed to Handlebars compiler
   }
 });
 ```
@@ -82,7 +83,9 @@ Optimization brings three benefits to a project:
 
 - The templates are bundled within your code and not dynamically loaded which reduces the number of HTTP requests.
 
-- The templates are partially pre-compiled before being bundled which reduces the work the client has to do.
+- The templates are pre-compiled before being bundled which reduces the work the client has to do.
+
+- Since templates are pre-compiled during build you can use the handlebars.runtime which is ~1KB after minification+gzip.
 
 The most important build options are:
 

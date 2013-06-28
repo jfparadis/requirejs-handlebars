@@ -16,7 +16,7 @@ Notes:
 
 - The text library can be removed at build-time using ``r.js``.
 
-- The extension ``.html`` is assmumed, and this makes loading templates similar to loading JavaScript files with RequireJS (all extensions are assumned).
+- The extension ``.html`` is assumed, and this makes loading templates similar to loading JavaScript files with RequireJS (all extensions are assumned).
 
 ## Installation
 

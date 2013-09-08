@@ -21,6 +21,7 @@ Notes:
 ## Changelog
 
 0.0.1 Initial version
+
 0.0.2 Various updates:
 - Add template path option to hbar.js (thanks drewrichards)
 - Updated require.js to 2.1.8 , and r.js to 2.1.8

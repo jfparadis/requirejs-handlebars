@@ -18,6 +18,14 @@ Notes:
 
 - The extension ``.html`` is assumed, and this makes loading templates similar to loading JavaScript files with RequireJS (all extensions are assumned).
 
+## Changelog
+
+0.0.1 Initial version
+0.0.2 Various updates:
+- Add template path option to hbar.js (thanks drewrichards)
+- Updated require.js to 2.1.8 , and r.js to 2.1.8
+- Updated handlebar.js to 1.0.0
+
 ## Installation
 
 Download HandlebarsJS and RequireJS-text:

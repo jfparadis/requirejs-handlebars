@@ -6,7 +6,7 @@
 // Using Handlebars Semantic templates at http://handlebarsjs.com
 // Using and RequireJS text.js at http://requirejs.org/docs/api.html#text
 // @author JF Paradis
-// @version 0.0.1
+// @version 0.0.2
 //
 // Released under the MIT license
 //
@@ -39,7 +39,7 @@ define(['text', 'Handlebars'], function (text, Handlebars) {
         buildTemplateSource = "define('{pluginName}!{moduleName}', ['Handlebars'], function (Handlebars) { return Handlebars.compile('{content}'); });\n";
 
     return {
-        version: '0.0.1',
+        version: '0.0.2',
 
         load: function (moduleName, parentRequire, onload, config) {
             if (buildMap[moduleName]) {
@@ -47,7 +47,8 @@ define(['text', 'Handlebars'], function (text, Handlebars) {
 
             } else {
                 var ext = (config.hbars && config.hbars.extension) || '.html';
-                text.load(moduleName + ext, parentRequire, function (source) {
+                var path = (config.hbars && config.hbars.path) || '';
+                text.load(path + moduleName + ext, parentRequire, function (source) {
                     if (config.isBuild) {
                         sourceMap[moduleName] = source;
                         onload();

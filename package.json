@@ -1,0 +1,37 @@
+{
+    "name": "requirejs-handlebars",
+    "description": "RequireJS Handlebars template plugin",
+    "version": "0.0.2",
+    "keywords": [
+        "requirejs",
+        "handlebars",
+        "template",
+        "javascript"
+    ],
+    "maintainers": [
+        {
+            "name": "Jean-Francois Paradis",
+            "twitter": "@jfparadis",
+            "web": "http://www.jeanfrancoisparadis.com"
+        }
+    ],
+    "dependencies": {
+        "http://github.com/jfparadis/requirejs-handlebars": "master"
+    },
+    "bugs": {
+        "url": "https://github.com/jfparadis/requirejs-handlebars/issues"
+    },
+    "repositories": [
+        {
+            "type": "git",
+            "url": "git@github.com:jfparadis/requirejs-handlebars.git"
+            }
+    ],
+    "licenses": [
+        {
+            "name": "MIT",
+            "url": "http://www.opensource.org/licenses/mit-license.php"
+        }
+    ],
+    "homepage": "http://github.com/jfparadis/requirejs-handlebars"
+}

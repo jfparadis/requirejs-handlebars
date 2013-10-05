@@ -74,7 +74,7 @@ require.config({
   // some paths and shims
 
   hbars: {
-    extension: '.hbars' // default = '.html',
+    extension: '.hbs', // default = '.html'
     compileOptions: {}  // options object which is passed to Handlebars compiler
   }
 });
@@ -92,7 +92,7 @@ Optimization brings three benefits to a project:
 
 - Since templates are pre-compiled during build you can use the handlebars.runtime which is ~1KB after minification+gzip.
 
-You need to manually replace the handlebars.runtime during compilation by adding this routine to your main.js.
+If you don't use any extra tool to manage your libraries, need to manually replace the handlebars.runtime during compilation by adding this routine to your main.js. See the example for how it works:
 
 ```
     onBuildWrite : function(moduleName, path, content){

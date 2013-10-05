@@ -1,5 +1,3 @@
-
-define('text',{});
 /*
 
 Copyright (C) 2011 by Yehuda Katz
@@ -362,58 +360,3 @@ Handlebars.template = Handlebars.VM.template;
 // lib/handlebars/browser-suffix.js
 })(Handlebars);
 ;
-
-define("Handlebars", (function (global) {
-    return function () {
-        var ret, fn;
-        return ret || global.Handlebars;
-    };
-}(this)));
-
-define('hbars',{load: function(id){throw new Error("Dynamic load not allowed: " + id);}});
-define('hbars!templates/message', ['Handlebars'], function (Handlebars) { return Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
-  this.compilerInfo = [4,'>= 1.0.0'];
-helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression;
-
-
-  buffer += "<h1>\n    Message\n</h1>\n<p>\n    ";
-  if (stack1 = helpers.message) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = depth0.message; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
-  buffer += escapeExpression(stack1)
-    + "\n</p>";
-  return buffer;
-  }); });
-
-require({
-    paths: {
-        templates:      '../templates',
-        Handlebars:     'libs/handlebars',
-        text:           'libs/text',
-        hbars:          'libs/hbars'
-    },
-    shim: {
-        Handlebars: {
-            exports: 'Handlebars'
-        }
-    },
-
-    onBuildWrite : function(moduleName, path, content){
-
-        // replace handlebars with the runtime version
-        if (moduleName === 'Handlebars') {
-            path = path.replace('handlebars.js','handlebars.runtime.js');
-            content = fs.readFileSync(path).toString();
-            content = content.replace(/(define\()(function)/, '$1"handlebars", $2');
-        }
-        return content;
-    }
-
-}, ['hbars!templates/message'], function (template) {
-    
-
-    console.log('template = ' + template);
-    document.body.innerHTML += template({message: 'Hello World!'});
-});
-
-define("main", function(){});

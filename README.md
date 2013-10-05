@@ -12,7 +12,7 @@ This is an AMD loader for [Handlebars semantic templates](http://handlebars.com)
 
 Notes:
 
-- The text library can be removed at build-time using ``r.js``.
+- The ``text`` and ``hbar`` plugins can be removed at build-time using ``r.js`` (with the ``stubModules`` setting).
 - The extension ``.html`` is assumed, and this makes loading templates similar to loading JavaScript files with RequireJS (all extensions are assumed).
 
 ## Changelog
@@ -74,7 +74,8 @@ require.config({
   // some paths and shims
 
   hbars: {
-    extension: '.hbars' // default = '.html'
+    extension: '.hbs', // default = '.html'
+    compileOptions: {}  // options object which is passed to Handlebars compiler
   }
 });
 ```
@@ -86,7 +87,25 @@ This plugin is compatible with [r.js](http://requirejs.org/docs/optimization.htm
 Optimization brings three benefits to a project:
 
 - The templates are bundled within your code and not dynamically loaded which reduces the number of HTTP requests.
-- The templates are partially pre-compiled before being bundled which reduces the work the client has to do.
+
+- The templates are pre-compiled before being bundled which reduces the work the client has to do.
+
+- Since templates are pre-compiled during build you can use the handlebars.runtime which is ~1KB after minification+gzip.
+
+If you don't use any extra tool to manage your libraries, need to manually replace the handlebars.runtime during compilation by adding this routine to your main.js. See the example for how it works:
+
+```
+    onBuildWrite : function(moduleName, path, content){
+
+        // replace handlebars with the runtime version
+        if (moduleName === 'Handlebars') {
+            path = path.replace('handlebars.js','handlebars.runtime.js');
+            content = fs.readFileSync(path).toString();
+            content = content.replace(/(define\()(function)/, '$1"handlebars", $2');
+        }
+        return content;
+    }
+```
 
 The most important build options are:
 
@@ -100,9 +119,16 @@ Removes from the output folder the files combined into a build.
 
 ## Example
 
+Sample build options are in the root ``build.js``. Compile the example using:
+
+```
+  $ ./build.sh
+```
+
 Copy the ``example`` and ``example-build`` folders to your web server (``text`` is not compatible with the ``file://`` protocol and opening ``index.hml`` directly from your browser will not work).
 
 ### Using a test server
+
 Alternatively, you can use Connect and NodeJS to spin a web server:
 
 - Install ``connect`` using ``npm`` and launch the server with NodeJS:

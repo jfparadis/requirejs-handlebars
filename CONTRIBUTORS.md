@@ -6,4 +6,5 @@ You can check out the [contribution graphs on github](https://github.com/jfparad
 $ git shortlog -s -n | cut -c8-
 Jean-Francois Paradis
 Chris Contolini
+Miller Medeiros
 ```

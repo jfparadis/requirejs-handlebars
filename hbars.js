@@ -47,21 +47,23 @@ define(['text', 'Handlebars'], function (text, Handlebars) {
             } else {
                 var ext = (config.hbars && config.hbars.extension) || '.html',
                     path = (config.hbars && config.hbars.path) || '',
-                    compileOptions = (config.hbars && config.hbars.compileOptions) || {};
+                    compileOptions = (config.hbars && config.hbars.compileOptions) || {},
+                    textOnload = function (source) {
+                        if (config.isBuild) {
+                            // We store the precompiled template so we can use the
+                            // handlebars.runtime after build.
+                            buildMap[moduleName] = Handlebars.precompile(source, compileOptions);
+                            // Don't bother doing anything else during build.
+                            onload();
+                        } else {
+                            // We store the compiled template for reuse
+                            buildMap[moduleName] = Handlebars.compile(source);
+                            onload(buildMap[moduleName]);
+                        }
+                    };
 
-                text.load(path + moduleName + ext, parentRequire, function (source) {
-                    if (config.isBuild) {
-                        // We store the precompiled template so we can use the
-                        // handlebars.runtime after build.
-                        buildMap[moduleName] = Handlebars.precompile(source, compileOptions);
-                        // Don't bother doing anything else during build.
-                        onload();
-                    } else {
-                        // We store the compiled template for reuse
-                        buildMap[moduleName] = Handlebars.compile(source);
-                        onload(buildMap[moduleName]);
-                    }
-                }, config);
+                textOnload.error = onload.error;
+                text.load(path + moduleName + ext, parentRequire, textOnload, config);
             }
         },
 

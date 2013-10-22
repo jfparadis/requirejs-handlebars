@@ -1,7 +1,7 @@
 requirejs-handlebars
 ====================
 
-This is an AMD loader for [Handlebars semantic templates](http://handlebars.com) which can be used as a drop-in replacement to [SlexAxton/require-handlebars-plugin](http://github.com/SlexAxton/require-handlebars-plugin/blob/master/hbs.js)
+This is an AMD loader for [Handlebars semantic templates](http://handlebarsjs.com/) which can be used as a drop-in replacement to [SlexAxton/require-handlebars-plugin](http://github.com/SlexAxton/require-handlebars-plugin/blob/master/hbs.js)
 
 
 ## Overview
@@ -28,7 +28,7 @@ Notes:
 
 Download HandlebarsJS and RequireJS-text:
 
-- [HandlebarsJS](http://handlebars.com)
+- [HandlebarsJS](http://handlebarsjs.com/)
 - [RequireJS-text](http://requirejs.org/docs/download.html#text)
 
 Typically, you would place them in a ``scripts/libs`` folder then create a ``scripts/main.js`` file to alias them and to shim Handlebars:
